@@ -2,8 +2,29 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import { reviews, placeUrl, fetchedAt, averageRating } from '../content/reviews'
 import { useLocale } from '../i18n/LocaleProvider'
 import { usePrefersReducedMotion } from '../animation/usePrefersReducedMotion'
+import { useMediaQuery } from '../hooks/useMediaQuery'
 import { gsap, ScrollTrigger } from '../animation/motion'
 import SectionHeading from './SectionHeading'
+
+/** Lucide `arrow-left` / `arrow-right`, as in Gallery.jsx. */
+function Arrow({ direction }) {
+  return (
+    <svg
+      viewBox="0 0 24 24"
+      width="18"
+      height="18"
+      fill="none"
+      stroke="currentColor"
+      strokeWidth="1.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      style={direction === 'left' ? { transform: 'scaleX(-1)' } : undefined}
+    >
+      <path d="M5 12h14M13 6l6 6-6 6" />
+    </svg>
+  )
+}
 
 /** Lucide's `star`, inlined — the design system specifies Lucide icons. */
 function Star({ filled }) {
@@ -60,10 +81,19 @@ function ReviewCard({ review, starsLabel }) {
 // list renders as a static, centered stack instead.
 const WALL_MIN_REVIEWS = 4
 
+// Matches the `.reviews__wall` two-column breakpoint in sections.css. Below
+// it, reviews go in a one-at-a-time carousel instead of the scrolling wall —
+// a wall column on a narrow viewport is just a long vertical list, and a
+// column running underneath another one reads as one long undifferentiated
+// stack rather than a wall.
+const MOBILE_QUERY = '(max-width: 759px)'
+
 export default function Reviews() {
   const { t, locale } = useLocale()
   const reduced = usePrefersReducedMotion()
+  const isMobile = useMediaQuery(MOBILE_QUERY)
   const [paused, setPaused] = useState(false)
+  const [activeIndex, setActiveIndex] = useState(0)
   const root = useRef(null)
   const tweens = useRef([])
   const showWall = reviews.length >= WALL_MIN_REVIEWS
@@ -75,7 +105,7 @@ export default function Reviews() {
   ]
 
   useLayoutEffect(() => {
-    if (reduced || !showWall) return
+    if (reduced || !showWall || isMobile) return
 
     const ctx = gsap.context(() => {
       const tracks = root.current.querySelectorAll('[data-review-track]')
@@ -116,7 +146,7 @@ export default function Reviews() {
     }, root)
 
     return () => ctx.revert()
-  }, [reduced, locale])
+  }, [reduced, locale, isMobile])
 
   // Pausing is a state change rather than a re-created tween, so the wall
   // resumes exactly where it stopped.
@@ -124,7 +154,7 @@ export default function Reviews() {
     tweens.current.forEach((tween) => (paused ? tween.pause() : tween.resume()))
   }, [paused])
 
-  const animated = !reduced && showWall
+  const animated = !reduced && showWall && !isMobile
 
   return (
     <section id="reviews" className="section section-surface reviews">
@@ -146,7 +176,34 @@ export default function Reviews() {
           <span className="text-muted">{t.reviews.ratingLabel}</span>
         </p>
 
-        {showWall ? (
+        {isMobile ? (
+          <div className="reviews__carousel">
+            <ReviewCard review={reviews[activeIndex]} starsLabel={t.reviews.starsLabel} />
+            <div className="reviews__carousel-nav">
+              <button
+                type="button"
+                className="btn btn-secondary btn-icon"
+                onClick={() => setActiveIndex((i) => Math.max(0, i - 1))}
+                disabled={activeIndex === 0}
+                aria-label={t.reviews.prevLabel}
+              >
+                <Arrow direction="left" />
+              </button>
+              <span className="reviews__carousel-count tnum" aria-hidden="true">
+                {activeIndex + 1} / {reviews.length}
+              </span>
+              <button
+                type="button"
+                className="btn btn-secondary btn-icon"
+                onClick={() => setActiveIndex((i) => Math.min(reviews.length - 1, i + 1))}
+                disabled={activeIndex === reviews.length - 1}
+                aria-label={t.reviews.nextLabel}
+              >
+                <Arrow direction="right" />
+              </button>
+            </div>
+          </div>
+        ) : showWall ? (
           <div
             ref={root}
             className={`reviews__wall ${animated ? 'is-animated' : ''}`}
