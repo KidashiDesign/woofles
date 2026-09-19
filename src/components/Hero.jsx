@@ -22,6 +22,18 @@ function useLoopingFade(fadeSeconds = 0.6) {
       return
     }
 
+    // Some mobile browsers (notably in-app webviews) ignore the `autoplay`
+    // attribute even when the video is muted and inline, but do honor a
+    // programmatic play() call. Mobile Safari/Chrome also pause background
+    // video when the tab is backgrounded without firing a resumable error,
+    // so nudge playback again once the page is visible.
+    el.muted = true
+    const resume = () => {
+      if (el.paused) el.play().catch(() => {})
+    }
+    resume()
+    document.addEventListener('visibilitychange', resume)
+
     el.style.transition = 'none'
 
     let raf
@@ -36,7 +48,10 @@ function useLoopingFade(fadeSeconds = 0.6) {
     }
     raf = requestAnimationFrame(tick)
 
-    return () => cancelAnimationFrame(raf)
+    return () => {
+      cancelAnimationFrame(raf)
+      document.removeEventListener('visibilitychange', resume)
+    }
   }, [fadeSeconds])
 
   return ref
