@@ -22,6 +22,14 @@ function useLoopingFade(fadeSeconds = 0.6) {
       return
     }
 
+    // Mobile browsers (iOS Safari, Chrome Android) enforce autoplay's mute
+    // requirement strictly at play() time. React can apply the `muted` JSX
+    // prop a tick after the `autoplay` attribute triggers playback, so on
+    // mobile the browser sometimes sees an unmuted video and blocks it
+    // silently. Setting `muted` and calling play() imperatively avoids that.
+    el.muted = true
+    el.play()?.catch(() => {})
+
     el.style.transition = 'none'
 
     let raf
