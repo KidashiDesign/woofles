@@ -423,6 +423,8 @@ export default {
     cachedNote: (date) => `Stand: ${date}`,
     pauseLabel: 'Scrollen pausieren',
     playLabel: 'Scrollen fortsetzen',
+    prevLabel: 'Vorherige Bewertung',
+    nextLabel: 'Nächste Bewertung',
   },
 
   gallery: {

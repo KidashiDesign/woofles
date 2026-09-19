@@ -787,6 +787,33 @@
   justify-content: center;
 }
 
+/* Below the wall's breakpoint (see MOBILE_QUERY in Reviews.jsx): one review
+   at a time with prev/next arrows underneath it, instead of the vertical
+   wall columns stacking one on top of the other. */
+.reviews__carousel {
+  display: grid;
+  justify-items: center;
+  gap: var(--space-4);
+}
+
+.reviews__carousel .review {
+  width: 100%;
+  max-width: 30rem;
+}
+
+.reviews__carousel-nav {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.reviews__carousel-count {
+  min-width: 3.5em;
+  text-align: center;
+  font-size: 0.85rem;
+  color: color-mix(in srgb, var(--color-text) 58%, transparent);
+}
+
 /* ── gallery ─────────────────────────────────────────────────────────────── */
 
 .gallery__head {

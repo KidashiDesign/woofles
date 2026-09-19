@@ -426,6 +426,8 @@ export default {
     cachedNote: (date) => `Snapshot taken ${date}`,
     pauseLabel: 'Pause scrolling',
     playLabel: 'Resume scrolling',
+    prevLabel: 'Previous review',
+    nextLabel: 'Next review',
   },
 
   gallery: {
