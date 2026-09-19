@@ -449,7 +449,7 @@ export default {
   notFound: {
     documentTitle: 'Seite nicht gefunden — Woofles',
     heading: 'Diese Seite steht nicht auf der Karte',
-    body: 'Der Link könnte veraltet sein, oder die Seite wurde verschoben.',
+    body: 'Der Link könnte veraltet sein, oder die Seite wurde verschoben von KidashiDesign.',
     cta: 'Zurück zum Start',
   },
 }

@@ -446,7 +446,7 @@ export default {
     instagramHref: 'https://www.instagram.com/woofles.leipzig/',
     googleMaps: 'Google Maps',
     rights: (year) => `© ${year} Woofles. All rights reserved.`,
-    credit: 'Demo site for client presentation.',
+    credit: 'Demo site for client presentation by KidashiDesign',
   },
 
   notFound: {
