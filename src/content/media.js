@@ -44,7 +44,7 @@ export const media = {
   introForeground: 'Desert',
 
   craft: 'american-fluffy-pancake',
-  craftDetail: 'couple-in-cafe', // "come visit us" invite — people at a table, not just product
+  craftDetail: 'inside_the_cafe', // "come visit us" invite — the room itself, not just product
 
   menuTeaser: 'Belgian_Waffle',
   events: 'Waffle_Man', // someone holding an oversized cone — reads as catering
