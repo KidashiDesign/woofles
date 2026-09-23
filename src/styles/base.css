@@ -357,8 +357,7 @@ a {
   border-radius: 0 999px 999px 0;
   box-shadow: var(--shadow-md);
   transform: translateY(-50%);
-  transition: transform var(--dur-fast) var(--ease-out),
-    background-color var(--dur-fast) var(--ease-out);
+  transition: background-color var(--dur-fast) var(--ease-out);
 }
 
 .kidashi-tab__icon {
@@ -368,7 +367,6 @@ a {
 .kidashi-tab:hover,
 .kidashi-tab:focus-visible {
   background: var(--color-kidashi-hover);
-  transform: translate(4px, -50%);
 }
 
 .kidashi-tab:focus-visible {
@@ -386,10 +384,6 @@ a {
 
 @media (prefers-reduced-motion: reduce) {
   .kidashi-tab {
-    transition: background-color var(--dur-fast) linear;
-  }
-  .kidashi-tab:hover,
-  .kidashi-tab:focus-visible {
-    transform: translateY(-50%);
+    transition: none;
   }
 }
