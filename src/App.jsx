@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { ReactLenis, useLenis } from 'lenis/react'
 import Nav from './components/Nav'
 import Footer from './components/Footer'
+import BackToKidashiDesignTab from './components/BackToKidashiDesignTab'
 import Home from './routes/Home'
 import About from './routes/About'
 import MenuPage from './routes/MenuPage'
@@ -83,6 +84,7 @@ function Shell() {
       <a className="skip-link" href="#main">
         {t.common.skipToContent}
       </a>
+      <BackToKidashiDesignTab />
       <Nav />
       <RouteChrome>
         <Routes>

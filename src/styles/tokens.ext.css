@@ -62,6 +62,12 @@
   --color-ink: #1a1918;
   --color-on-ink: #efece7;
   --color-on-ink-muted: color-mix(in srgb, #efece7 62%, transparent);
+
+  /* Kidashi Design's own corporate green, used only by the site-credit side
+     tab — it belongs to their brand, not this one, so it stays its own
+     token rather than joining the --color-accent ramp above. */
+  --color-kidashi: #cbcfae;
+  --color-kidashi-hover: color-mix(in srgb, var(--color-kidashi) 82%, black);
 }
 
 @media (min-width: 900px) {
