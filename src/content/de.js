@@ -40,6 +40,8 @@ export default {
     priceTbc: '—',
     placeholderBadge: 'Platzhalter',
     loading: 'Wird geladen',
+    kidashiTabHide: 'Kidashi-Design-Button ausblenden',
+    kidashiTabShow: 'Kidashi-Design-Button einblenden',
   },
 
   home: {
